@@ -43,7 +43,35 @@ function plotHorizontalBar() {
     orientation: 'h'
   }]
 
-  Plotly.newPlot('bar', bar_data);
+Plotly.newPlot('bar', bar_data);
+}
+
+function plotBubbleChart() {
+  console.log(otu_ids);
+
+  var trace1 = {
+    x: samples.otu_ids,
+    y: samples.sample_values,
+    mode: 'markers',
+    marker: {
+      size: samples.sample_values,
+      color: samples.otu_ids
+    },
+    text: samples.otu_labels
+    };
+    
+  var bubble_data = [trace1];
+    
+  var layout = {
+    showlegend: false,
+    xaxis: {
+      title: {
+      text: 'UTU ID'
+      }
+    }
+    };
+    
+  Plotly.newPlot('bubble', bubble_data, layout);
 }
 
 function optionChanged(selectedName) {
@@ -55,6 +83,7 @@ function optionChanged(selectedName) {
    
   populateDemoGraphic();
   plotHorizontalBar();
+  plotBubbleChart()
 }
 
 
