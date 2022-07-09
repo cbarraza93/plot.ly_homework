@@ -47,6 +47,7 @@ Plotly.newPlot('bar', bar_data);
 }
 
 function plotBubbleChart() {
+  
   console.log(otu_ids);
 
   var trace1 = {
@@ -63,6 +64,7 @@ function plotBubbleChart() {
   var bubble_data = [trace1];
     
   var layout = {
+    title: "<b>OTU ID and Bacteria",
     showlegend: false,
     xaxis: {
       title: {
@@ -74,6 +76,80 @@ function plotBubbleChart() {
   Plotly.newPlot('bubble', bubble_data, layout);
 }
 
+function displayGaugeChart() {
+
+  var pathArr = {
+    '0': 'M 0.17 0.5 L 0.34 0.5 L 0.35 0.5 Z', //0
+    '1': 'M 0.33 0.5 L 0.175 0.565 L 0.35 0.5 Z', //1
+    '2': 'M 0.33 0.5 L 0.205 0.625 L 0.35 0.5 Z', //2
+    '3': 'M 0.33 0.5 L 0.26 0.665 L 0.35 0.5 Z', //3
+    '4': 'M 0.33 0.5 L 0.315 0.685 L 0.35 0.5 Z', //4
+    '5': 'M 0.33 0.5 L 0.37 0.685 L 0.35 0.5 Z', //5
+    '6': 'M 0.33 0.5 L 0.43 0.665 L 0.35 0.5 Z', //6
+    '7': 'M 0.33 0.5 L 0.475 0.625 L 0.35 0.5 Z', //7
+    '8': 'M 0.33 0.5 L 0.505 0.56 L 0.35 0.5 Z', //8
+    '9': 'M 0.33 0.5 L 0.51 0.5 L 0.35 0.5 Z'}; //9   
+ 
+     
+  var meter_chart = [{
+    values: [90, 10, 10, 10, 10, 10,10, 10, 10,10],
+    labels: [" ", "0-1", "1-2", "2-3", "3-4", "4-5","5-6","6-7","7-8","8-9"],
+    marker: {
+      colors: [
+        'rgb(255, 255, 255)',
+        'rgb(247, 242, 236)',
+        'rgb(243, 240, 229)',
+        'rgb(233, 231, 201)',
+        'rgb(229, 233, 177)',
+        'rgb(213, 229, 149)',
+        'rgb(183, 205, 139)',
+        'rgb(135, 192, 128)',
+        'rgb(133, 189, 139)',
+        'rgb(128, 182, 134)'
+      ]
+    },
+    domain: {"x": [0, 0.68]},
+    name: "Gauge",
+    hole: .5,
+    type: "pie",
+    direction: "clockwise",
+    rotation: 90,
+    showlegend: false,
+    textinfo: "label",
+    textposition: "inside",
+    hoverinfo: "none"
+  }]
+ 
+  var layout = {
+    title: "<b>Belly Button Washing Frequency</b><br>Scrubs per Week",
+    shapes: [
+      {
+        'type': 'path',
+        'path': pathArr[data.metadata[ind].wfreq],
+        'fillcolor': 'rgba(134,0,0,255)',
+        'line': {
+          'width': 0.5
+        },
+        'xref': 'paper',
+        'yref': 'paper'
+      }
+    ],
+    annotations: [
+      {
+        'xref': 'paper',
+        'yref': 'paper',
+        'x': 0.34,
+        'y': 0.45,
+        'text': data.metadata[ind].wfreq,
+        'showarrow': false
+      }
+    ]
+  };
+ 
+  Plotly.newPlot('gauge', meter_chart, layout);
+}
+
+
 function optionChanged(selectedName) {
   console.log(selectedName);
   ind = data.metadata.findIndex(x => x.id === parseInt(selectedName));
@@ -83,7 +159,8 @@ function optionChanged(selectedName) {
    
   populateDemoGraphic();
   plotHorizontalBar();
-  plotBubbleChart()
+  plotBubbleChart();
+  displayGaugeChart()
 }
 
 
