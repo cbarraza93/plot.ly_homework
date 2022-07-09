@@ -66,7 +66,7 @@ function plotBubbleChart() {
     showlegend: false,
     xaxis: {
       title: {
-      text: 'UTU ID'
+      text: 'OTU ID'
       }
     }
     };
